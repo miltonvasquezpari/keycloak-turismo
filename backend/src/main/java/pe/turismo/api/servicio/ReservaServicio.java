@@ -82,4 +82,29 @@ public class ReservaServicio {
     r.setEstado(EstadoReserva.CANCELADA);
     return ReservaResponse.de(reservas.save(r));
   }
+
+  /** E7 · reservas por agencia. Si {@code agenciaId} es null (admin sin
+   *  claim), devuelve todas. La regla de ROL_agente la impone el filter chain. */
+  @Transactional(readOnly = true)
+  public List<ReservaResponse> reservasDeAgencia(String agenciaId) {
+    List<Reserva> rs = (agenciaId == null || agenciaId.isBlank())
+        ? reservas.findAll()
+        : reservas.findByAgenciaIdOrderByCreadaEnDesc(agenciaId);
+    return rs.stream().map(ReservaResponse::de).toList();
+  }
+
+  /** E8 · confirmar (regla de ROL_reservas.confirmar en filter chain;
+   *  @PreAuthorize: admin O agente de la misma agencia). */
+  @Transactional
+  @PreAuthorize("hasRole('admin') or @reservaSecurity.mismaAgencia(#id, authentication)")
+  public ReservaResponse confirmar(String id) {
+    Reserva r = reservas.findById(id)
+        .orElseThrow(() -> new RecursoNoEncontradoException("Reserva " + id + " no existe"));
+    if (r.getEstado() != EstadoReserva.PENDIENTE) {
+      throw new ConflictoEstadoException(
+          "La reserva " + id + " no esta PENDIENTE y no puede confirmarse");
+    }
+    r.setEstado(EstadoReserva.CONFIRMADA);
+    return ReservaResponse.de(reservas.save(r));
+  }
 }

@@ -52,6 +52,11 @@ turismo:
     rules:
       - { path: /api/reservas/mias,              methods: [GET], all-of: [ROLE_cliente] }
       - { path: /api/reservas,                   methods: [POST], all-of: [ROLE_cliente, SCOPE_reservas:write] }
+      - { path: /api/agencia/reservas,           methods: [GET], all-of: [ROLE_agente] }
+      - { path: /api/reservas/*/confirmar,       methods: [PUT], all-of: [ROLE_reservas.confirmar] }
+      - { path: /api/admin/tours,                methods: [POST], all-of: [ROLE_tours.gestionar] }
+      - { path: /api/admin/tours/*,              methods: [PUT],  all-of: [ROLE_tours.gestionar] }
+      - { path: /api/pagos,                      methods: [POST], all-of: [ROLE_pagos.procesar, SCOPE_pagos:write] }
       # /api/reservas/{id}             -> E5: @PostAuthorize en el metodo
       # /api/reservas/{id}/cancelar    -> E6: @PreAuthorize en el metodo
     authenticated-paths:

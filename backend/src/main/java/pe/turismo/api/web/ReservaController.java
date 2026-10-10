@@ -45,4 +45,12 @@ public class ReservaController {
   public ReservaResponse cancelar(@PathVariable String id) {
     return servicio.cancelar(id);
   }
+
+  /** E8 · PUT /api/reservas/{id}/confirmar
+   *  Rol de ruta en application.yml: ROLE_reservas.confirmar.
+   *  @PreAuthorize adicional en el servicio: admin o misma agencia. */
+  @PutMapping("/{id}/confirmar")
+  public ReservaResponse confirmar(@PathVariable String id) {
+    return servicio.confirmar(id);
+  }
 }
