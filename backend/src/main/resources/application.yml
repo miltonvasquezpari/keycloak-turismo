@@ -57,6 +57,7 @@ turismo:
       - { path: /api/admin/tours,                methods: [POST], all-of: [ROLE_tours.gestionar] }
       - { path: /api/admin/tours/*,              methods: [PUT],  all-of: [ROLE_tours.gestionar] }
       - { path: /api/pagos,                      methods: [POST], all-of: [ROLE_pagos.procesar, SCOPE_pagos:write] }
+      - { path: /api/partners/**,                methods: [GET],  all-of: [ROLE_disponibilidad.consultar] }
       # /api/reservas/{id}             -> E5: @PostAuthorize en el metodo
       # /api/reservas/{id}/cancelar    -> E6: @PreAuthorize en el metodo
     authenticated-paths:
