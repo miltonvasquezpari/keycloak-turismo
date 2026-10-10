@@ -1,0 +1,40 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: turismo-api
+  datasource:
+    # Por defecto apunta al Postgres mapeado en localhost:5433.
+    # Para correr el backend en el contenedor Docker en la misma red del
+    # compose, se sobreescribe con SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/turismo_app
+    url: jdbc:postgresql://localhost:5433/turismo_app
+    username: turismo
+    password: turismo
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+  jackson:
+    time-zone: America/Lima
+    serialization:
+      write-dates-as-timestamps: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    org.hibernate.SQL: INFO
+    pe.turismo.api: INFO
