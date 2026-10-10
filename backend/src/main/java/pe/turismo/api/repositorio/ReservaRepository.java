@@ -18,4 +18,19 @@ public interface ReservaRepository extends JpaRepository<Reserva, String> {
          "and r.estado <> pe.turismo.api.dominio.EstadoReserva.CANCELADA")
   int sumPersonasPorTourYFecha(@Param("tourId") Long tourId,
                                @Param("fecha")  LocalDate fecha);
+
+  /** Agregado por agencia y tour: cuenta, personas y monto. Excluye CANCELADAS. */
+  @Query("""
+    select r.agenciaId as agenciaId,
+           r.tour.codigo as tourCodigo,
+           r.tour.nombre as tourNombre,
+           count(r)      as cantidadReservas,
+           coalesce(sum(r.personas), 0) as personas,
+           coalesce(sum(r.montoTotal), 0) as montoTotal
+    from Reserva r
+    where r.estado <> pe.turismo.api.dominio.EstadoReserva.CANCELADA
+    group by r.agenciaId, r.tour.codigo, r.tour.nombre
+    order by r.agenciaId, r.tour.codigo
+  """)
+  List<java.util.Map<String, Object>> agregarVentasPorAgenciaYTour();
 }

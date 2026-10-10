@@ -53,6 +53,14 @@
       <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
     </dependency>
 
+    <!-- Policy Enforcer de Keycloak para /api/reportes/** (F5).
+         MISMA version que el server para evitar incompatibilidades (T14). -->
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-policy-enforcer</artifactId>
+      <version>26.0.7</version>
+    </dependency>
+
     <!-- Health / info -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

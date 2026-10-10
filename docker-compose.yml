@@ -42,6 +42,14 @@ services:
       KC_HEALTH_ENABLED: "true"
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
+      # Frontchannel: la URL publica (lo que ven el navegador y los `iss` de
+      # los tokens). Backchannel-dynamic hace que las URLs usadas por servicios
+      # internos (p.ej. el Policy Enforcer del backend llamando a /token) se
+      # calculen a partir del request, no de KC_HOSTNAME. Asi el PE puede
+      # usar http://turismo-keycloak:8080 por la red de Docker mientras los
+      # tokens siguen teniendo iss=http://localhost:8080/realms/<X>.
+      KC_HOSTNAME: "http://localhost:8080"
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
 
       # Secretos que los JSON de realms referencian como ${...}
       TURISMO_API_SECRET: ${TURISMO_API_SECRET}

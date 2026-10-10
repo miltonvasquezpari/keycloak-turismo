@@ -67,6 +67,15 @@ turismo:
     # Spring Boot mapea var a turismo.security.kc-internal-base-url.
     kc-internal-base-url: ${KC_INTERNAL_BASE_URL:}
 
+  # Policy Enforcer (F5) — se aplica solo a /api/reportes/**
+  keycloak:
+    # URL que el enforcer usa para hablar con Keycloak (puede ser interna
+    # dentro de la red Docker del compose).
+    auth-server-url: ${KC_INTERNAL_BASE_URL:http://localhost:8080}
+    realm: turismo
+    resource: turismo-api
+    secret: ${TURISMO_API_SECRET:cambiar-en-local}
+
 logging:
   level:
     org.hibernate.SQL: INFO

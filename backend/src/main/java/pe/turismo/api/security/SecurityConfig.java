@@ -3,6 +3,7 @@ package pe.turismo.api.security;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authorization.AuthorityAuthorizationManager;
@@ -42,9 +43,10 @@ public class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http,
-                                         AuthenticationEntryPoint restAuthEntryPoint,
-                                         AccessDeniedHandler restAccessDeniedHandler) throws Exception {
+  @Order(2)
+  public SecurityFilterChain apiFilterChain(HttpSecurity http,
+                                            AuthenticationEntryPoint restAuthEntryPoint,
+                                            AccessDeniedHandler restAccessDeniedHandler) throws Exception {
     http
         .csrf(AbstractHttpConfigurer::disable)
         .cors(c -> c.configurationSource(corsSource()))

@@ -118,6 +118,21 @@ check "sin token" 401 "$URL"
 check "pedro"     200 -H "Authorization: Bearer $PEDRO" "$URL"
 check "ana"       403 -H "Authorization: Bearer $ANA"   "$URL"
 
+echo "=== E12 GET /api/reportes/ventas (Policy Enforcer, scope view) ==="
+check "sin token"            401                                   "$API/api/reportes/ventas"
+check "ana"                  403 -H "Authorization: Bearer $ANA"   "$API/api/reportes/ventas"
+check "jorge (supervisor)"   200 -H "Authorization: Bearer $JORGE" "$API/api/reportes/ventas"
+check "fiona (reportes.ver)" 200 -H "Authorization: Bearer $FIONA" "$API/api/reportes/ventas"
+check "admin"                200 -H "Authorization: Bearer $ADMIN" "$API/api/reportes/ventas"
+check "pedro (otro realm)"   401 -H "Authorization: Bearer $PEDRO" "$API/api/reportes/ventas"
+
+echo "=== E13 GET /api/reportes/ventas/export (scope export + Horario Laboral) ==="
+# Nota: jorge y fiona dependen de la hora actual (08-20 Lima) y de la policy
+# agregada (Supervision Lima + Horario). Admin PERMIT siempre.
+check "sin token" 401 "$API/api/reportes/ventas/export"
+check "ana"       403 -H "Authorization: Bearer $ANA"   "$API/api/reportes/ventas/export"
+check "admin"     200 -H "Authorization: Bearer $ADMIN" "$API/api/reportes/ventas/export"
+
 echo
 echo "============================================"
 echo "TOTAL: OK=$PASS_OK  FAIL=$PASS_FAIL"
