@@ -34,6 +34,33 @@ management:
       exposure:
         include: health,info
 
+turismo:
+  security:
+    issuers:
+      - http://localhost:8080/realms/turismo
+      - http://localhost:8080/realms/agencias-partners
+    audience: turismo-api
+    role-clients:
+      - turismo-api
+      - partners-integracion
+    cors-origins:
+      - http://localhost:4200
+    public-paths:
+      - /api/public/**
+      - /actuator/health
+      - /actuator/info
+    rules:
+      - { path: /api/reservas/mias,              methods: [GET], all-of: [ROLE_cliente] }
+      - { path: /api/reservas,                   methods: [POST], all-of: [ROLE_cliente, SCOPE_reservas:write] }
+      # /api/reservas/{id}             -> E5: @PostAuthorize en el metodo
+      # /api/reservas/{id}/cancelar    -> E6: @PreAuthorize en el metodo
+    authenticated-paths:
+      - /api/**
+    # Si el backend corre dentro de la red Docker del compose, override:
+    #   KC_INTERNAL_BASE_URL=http://turismo-keycloak:8080
+    # Spring Boot mapea var a turismo.security.kc-internal-base-url.
+    kc-internal-base-url: ${KC_INTERNAL_BASE_URL:}
+
 logging:
   level:
     org.hibernate.SQL: INFO

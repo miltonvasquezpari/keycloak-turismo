@@ -25,6 +25,7 @@ docker run --rm $TTY_FLAG \
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/turismo_app \
   -e SPRING_DATASOURCE_USERNAME=turismo \
   -e SPRING_DATASOURCE_PASSWORD=turismo \
+  -e KC_INTERNAL_BASE_URL=http://turismo-keycloak:8080 \
   -e TZ=America/Lima \
   maven:3.9-eclipse-temurin-21 \
   mvn "$@"

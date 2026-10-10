@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,6 +20,27 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorResponse> noEncontrado(RecursoNoEncontradoException ex,
                                                     HttpServletRequest req) {
     return build(HttpStatus.NOT_FOUND, "No encontrado", ex.getMessage(), req);
+  }
+
+  @ExceptionHandler(ConflictoEstadoException.class)
+  public ResponseEntity<ErrorResponse> conflicto(ConflictoEstadoException ex,
+                                                 HttpServletRequest req) {
+    return build(HttpStatus.CONFLICT, "Conflicto de estado", ex.getMessage(), req);
+  }
+
+  /** @PreAuthorize / @PostAuthorize que fallan dentro del controller
+   *  lanzan AccessDeniedException; mapear a 403 con JSON uniforme. */
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<ErrorResponse> accesoDenegado(AccessDeniedException ex,
+                                                      HttpServletRequest req) {
+    return build(HttpStatus.FORBIDDEN, "Acceso denegado",
+        "No tiene permisos para este recurso", req);
+  }
+
+  @ExceptionHandler(AuthenticationException.class)
+  public ResponseEntity<ErrorResponse> noAutenticado(AuthenticationException ex,
+                                                     HttpServletRequest req) {
+    return build(HttpStatus.UNAUTHORIZED, "No autenticado", ex.getMessage(), req);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
