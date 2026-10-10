@@ -268,9 +268,9 @@
                 "manage-authorization",
                 "query-clients",
                 "query-realms",
+                "manage-identity-providers",
                 "view-realm",
                 "view-users",
-                "manage-identity-providers",
                 "manage-realm",
                 "manage-users",
                 "query-users",
@@ -824,8 +824,8 @@
         {
           "id": "2f9c5462-f52f-4757-bf31-fe37473d3aa2",
           "type": "password",
-          "createdDate": 1791598813759,
-          "secretData": "{\"value\":\"4z6vpb+DcW55BvB2Ym4twirN87/J7l1KhwrVzb1SISI=\",\"salt\":\"6XWCqOC8a4dT/zxZfhBSrQ==\",\"additionalParameters\":{}}",
+          "createdDate": 1791600895223,
+          "secretData": "{\"value\":\"rvPoEDC9mZBw7xO975DDi6XBaFkFU1C1mPWHkP25lNo=\",\"salt\":\"XOiFmxxTfOeiH9YK5P37DA==\",\"additionalParameters\":{}}",
           "credentialData": "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
         }
       ],
@@ -969,8 +969,8 @@
         {
           "id": "4ee75249-d3ef-43bf-b367-ccafbcd3fed7",
           "type": "password",
-          "createdDate": 1791598824504,
-          "secretData": "{\"value\":\"IUuYIpE13rgXMjQlI33Wl8vRlF+D7A924Ldj2dQoLiI=\",\"salt\":\"4FuqwWP5RENf7+joz+6GSQ==\",\"additionalParameters\":{}}",
+          "createdDate": 1791601160120,
+          "secretData": "{\"value\":\"lAzrvzCye4UbY+VYGv6/1cnPDBYIMLZ/e/ehU2cuTwg=\",\"salt\":\"5O0pcOZZSCc6GKaEgk7hvg==\",\"additionalParameters\":{}}",
           "credentialData": "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
         }
       ],
@@ -1154,7 +1154,8 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
-        "client.use.lightweight.access.token.enabled": "true"
+        "client.use.lightweight.access.token.enabled": "true",
+        "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -1196,7 +1197,8 @@
       "frontchannelLogout": false,
       "protocol": "openid-connect",
       "attributes": {
-        "realm_client": "true"
+        "realm_client": "true",
+        "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
@@ -1238,7 +1240,8 @@
       "frontchannelLogout": false,
       "protocol": "openid-connect",
       "attributes": {
-        "realm_client": "true"
+        "realm_client": "true",
+        "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
@@ -1351,7 +1354,8 @@
       "frontchannelLogout": false,
       "protocol": "openid-connect",
       "attributes": {
-        "realm_client": "false"
+        "realm_client": "false",
+        "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -1365,8 +1369,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "clientHost",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientHost",
             "jsonType.label": "String"
@@ -1380,8 +1385,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "clientAddress",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientAddress",
             "jsonType.label": "String"
@@ -1395,8 +1401,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "client_id",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "client_id",
             "jsonType.label": "String"
@@ -1421,9 +1428,113 @@
       "authorizationSettings": {
         "allowRemoteResourceManagement": true,
         "policyEnforcementMode": "ENFORCING",
-        "resources": [],
-        "policies": [],
-        "scopes": [],
+        "resources": [
+          {
+            "name": "Reporte Ventas",
+            "type": "urn:turismo:reporte",
+            "ownerManagedAccess": false,
+            "attributes": {},
+            "uris": [
+              "/api/reportes/ventas/*",
+              "/api/reportes/ventas"
+            ],
+            "scopes": [
+              {
+                "name": "view"
+              },
+              {
+                "name": "export"
+              }
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "name": "Rol Supervisor",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "roles": "[{\"id\":\"supervisor-agencia\",\"required\":false}]"
+            }
+          },
+          {
+            "name": "Rol Reportes",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "roles": "[{\"id\":\"turismo-api/reportes.ver\",\"required\":false}]"
+            }
+          },
+          {
+            "name": "Rol Admin",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "roles": "[{\"id\":\"admin\",\"required\":false}]"
+            }
+          },
+          {
+            "name": "Grupo Supervision Lima",
+            "type": "group",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "groups": "[{\"path\":\"/Agencias/Agencia-Lima/Supervision\",\"extendChildren\":false}]"
+            }
+          },
+          {
+            "name": "Horario Laboral",
+            "type": "time",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "hourEnd": "20",
+              "minuteEnd": "0",
+              "hour": "8",
+              "minute": "0"
+            }
+          },
+          {
+            "name": "Supervisor Lima en Horario",
+            "type": "aggregate",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "applyPolicies": "[\"Grupo Supervision Lima\",\"Horario Laboral\"]"
+            }
+          },
+          {
+            "name": "Ver Reporte Ventas",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"view\"]",
+              "applyPolicies": "[\"Rol Supervisor\",\"Rol Reportes\",\"Rol Admin\"]"
+            }
+          },
+          {
+            "name": "Exportar Reporte Ventas",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"export\"]",
+              "applyPolicies": "[\"Rol Admin\",\"Supervisor Lima en Horario\"]"
+            }
+          }
+        ],
+        "scopes": [
+          {
+            "name": "view"
+          },
+          {
+            "name": "export"
+          }
+        ],
         "decisionStrategy": "UNANIMOUS"
       }
     },
@@ -1453,6 +1564,7 @@
       "protocol": "openid-connect",
       "attributes": {
         "realm_client": "false",
+        "post.logout.redirect.uris": "+",
         "pkce.code.challenge.method": "S256"
       },
       "authenticationFlowBindingOverrides": {},
@@ -1468,7 +1580,8 @@
           "config": {
             "included.client.audience": "turismo-api",
             "id.token.claim": "false",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
           }
         },
         {
@@ -1936,12 +2049,13 @@
           "protocolMapper": "oidc-organization-membership-mapper",
           "consentRequired": false,
           "config": {
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "organization",
-            "jsonType.label": "String",
-            "multivalued": "true"
+            "jsonType.label": "String"
           }
         }
       ]
@@ -2017,8 +2131,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "AUTH_TIME",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "auth_time",
             "jsonType.label": "long"
@@ -2045,7 +2160,8 @@
           "config": {
             "id.token.claim": "true",
             "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         }
       ]
@@ -2146,6 +2262,7 @@
           "config": {
             "introspection.token.claim": "true",
             "multivalued": "true",
+            "userinfo.token.claim": "true",
             "user.attribute": "foo",
             "id.token.claim": "true",
             "access.token.claim": "true",
@@ -2286,14 +2403,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
+            "saml-role-list-mapper",
             "oidc-full-name-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "saml-user-attribute-mapper",
             "oidc-usermodel-attribute-mapper",
             "saml-user-property-mapper",
             "oidc-address-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-property-mapper",
-            "saml-role-list-mapper",
-            "saml-user-attribute-mapper"
+            "oidc-usermodel-property-mapper"
           ]
         }
       },
@@ -2306,13 +2423,13 @@
         "config": {
           "allowed-protocol-mapper-types": [
             "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "oidc-address-mapper",
             "saml-role-list-mapper",
+            "oidc-usermodel-attribute-mapper",
             "saml-user-property-mapper",
             "saml-user-attribute-mapper",
-            "oidc-usermodel-property-mapper",
-            "oidc-full-name-mapper"
+            "oidc-full-name-mapper",
+            "oidc-address-mapper",
+            "oidc-usermodel-property-mapper"
           ]
         }
       }
