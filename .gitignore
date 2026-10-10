@@ -1,0 +1,23 @@
+# Entorno
+.env
+*.env.local
+
+# Node / Angular
+**/node_modules
+**/dist
+.angular
+
+# Java / Maven
+**/target
+*.jar
+*.class
+
+# IDEs
+.idea
+.vscode
+*.iml
+
+# Logs y temporales
+*.log
+*.tmp
+.DS_Store
