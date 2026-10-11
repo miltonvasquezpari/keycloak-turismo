@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
-export interface TourResumen { codigo: string; nombre: string; destino?: string; precio?: number; }
+export interface TourResumen { id: number; codigo: string; nombre: string; destino?: string; precio?: number; }
 export interface TourDetalle extends TourResumen { descripcion?: string; cuposTotales?: number; }
 export interface Reserva { id: number; tourCodigo: string; estado: string; personas: number; }
 export interface Pago { id: number; monto: number; estado: string; }

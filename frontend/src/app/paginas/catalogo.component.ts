@@ -13,7 +13,7 @@ import { ApiService, TourResumen } from '../core/api.service';
     <p *ngIf="error()" class="err">{{error()}}</p>
     <ul class="lista">
       <li *ngFor="let t of tours()">
-        <a [routerLink]="['/tours', t.codigo]"><strong>{{t.nombre}}</strong></a>
+        <a [routerLink]="['/tours', t.id]"><strong>{{t.nombre}}</strong></a>
         <small>{{t.destino}} · S/ {{t.precio}}</small>
       </li>
     </ul>
