@@ -20,6 +20,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,7 @@ public class ReportesSecurityConfig {
   @Order(1)
   public SecurityFilterChain reportesFilterChain(
       HttpSecurity http,
+      CorsConfigurationSource corsSource,
       AuthenticationEntryPoint restAuthEntryPoint,
       AccessDeniedHandler restAccessDeniedHandler) throws Exception {
 
@@ -57,6 +59,7 @@ public class ReportesSecurityConfig {
     http
         .securityMatcher(new AntPathRequestMatcher("/api/reportes/**"))
         .csrf(AbstractHttpConfigurer::disable)
+        .cors(c -> c.configurationSource(corsSource))
         .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .exceptionHandling(e -> e
             .authenticationEntryPoint(restAuthEntryPoint)

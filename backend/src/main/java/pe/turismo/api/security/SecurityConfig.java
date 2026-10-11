@@ -45,11 +45,12 @@ public class SecurityConfig {
   @Bean
   @Order(2)
   public SecurityFilterChain apiFilterChain(HttpSecurity http,
+                                            CorsConfigurationSource corsSource,
                                             AuthenticationEntryPoint restAuthEntryPoint,
                                             AccessDeniedHandler restAccessDeniedHandler) throws Exception {
     http
         .csrf(AbstractHttpConfigurer::disable)
-        .cors(c -> c.configurationSource(corsSource()))
+        .cors(c -> c.configurationSource(corsSource))
         .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .exceptionHandling(e -> e
             .authenticationEntryPoint(restAuthEntryPoint)
@@ -141,6 +142,7 @@ public class SecurityConfig {
     };
   }
 
+  @Bean
   CorsConfigurationSource corsSource() {
     CorsConfiguration cfg = new CorsConfiguration();
     cfg.setAllowedOrigins(props.corsOrigins() == null ? List.of() : props.corsOrigins());
