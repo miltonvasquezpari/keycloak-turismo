@@ -2350,7 +2350,7 @@
     {
       "name": "grupo-clientes-estandar",
       "identityProviderAlias": "github",
-      "identityProviderMapper": "hardcoded-group-idp-mapper",
+      "identityProviderMapper": "oidc-hardcoded-group-idp-mapper",
       "config": {
         "syncMode": "INHERIT",
         "group": "/Clientes/Estandar"

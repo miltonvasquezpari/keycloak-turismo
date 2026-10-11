@@ -63,7 +63,7 @@ Se aplican a cualquier usuario que entre por GitHub:
 
 | Mapper | Tipo | Config |
 |---|---|---|
-| `grupo-clientes-estandar` | `hardcoded-group-idp-mapper` | `group=/Clientes/Estandar` |
+| `grupo-clientes-estandar` | `oidc-hardcoded-group-idp-mapper` | `group=/Clientes/Estandar` |
 | `origen-github` | `hardcoded-attribute-idp-mapper` | `attribute=origen`, `attribute.value=github` |
 
 El primer mapper garantiza que el usuario llega con **rol `cliente`**
