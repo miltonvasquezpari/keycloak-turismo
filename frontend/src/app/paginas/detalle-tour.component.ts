@@ -16,7 +16,7 @@ import { TieneRolDirective } from '../core/tiene-rol.directive';
       <p>{{t.descripcion}}</p>
       <p><strong>Destino:</strong> {{t.destino}}</p>
       <p><strong>Precio:</strong> S/ {{t.precio}}</p>
-      <a *tieneRol="'cliente'" [routerLink]="['/reservar', t.codigo]"><button>Reservar</button></a>
+      <a *tieneRol="'cliente'" [routerLink]="['/reservar', t.id]"><button>Reservar</button></a>
       <p *ngIf="!logueado"><em>Inicia sesión como cliente para reservar.</em></p>
     </div>
     <p *ngIf="error()" class="err">{{error()}}</p>
