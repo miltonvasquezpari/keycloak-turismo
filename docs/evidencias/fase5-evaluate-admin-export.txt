@@ -1,0 +1,139 @@
+# Evaluate: user=admin.turismo scope=export
+# status = PERMIT
+# resource = Reporte Ventas with scopes [export]
+# decision = PERMIT
+#   policy Exportar Reporte Ventas -> PERMIT
+
+{
+  "results": [
+    {
+      "resource": {
+        "name": "Reporte Ventas with scopes [export]",
+        "_id": "81223f82-3d24-4ba2-ab8f-c01adea78d31"
+      },
+      "scopes": [
+        {
+          "id": "0f37333b-c946-4526-8bec-0e4daf5abebe",
+          "name": "export"
+        }
+      ],
+      "policies": [
+        {
+          "policy": {
+            "id": "23132bd1-f3a4-4b1a-bd35-5f4fd3b2bd0e",
+            "name": "Exportar Reporte Ventas",
+            "type": "scope",
+            "resources": [],
+            "scopes": [
+              "export"
+            ],
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {}
+          },
+          "status": "PERMIT",
+          "associatedPolicies": [
+            {
+              "policy": {
+                "id": "44ac01ad-9bb1-428f-ac73-926aaf05bf70",
+                "name": "Rol Admin",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "PERMIT",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "274e1f94-a87c-437f-802f-0754af13f9d0",
+                "name": "Supervisor Lima en Horario",
+                "type": "aggregate",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            }
+          ],
+          "scopes": []
+        }
+      ],
+      "status": "PERMIT",
+      "allowedScopes": [
+        {
+          "id": "0f37333b-c946-4526-8bec-0e4daf5abebe",
+          "name": "export"
+        }
+      ]
+    }
+  ],
+  "entitlements": false,
+  "status": "PERMIT",
+  "rpt": {
+    "exp": 1791687312,
+    "iat": 1791687012,
+    "jti": "bb6a0bd7-517d-4ae1-9ab7-3ce499e09438",
+    "aud": "turismo-api",
+    "sub": "96b041a1-763d-4ee5-b6e3-593ca6636292",
+    "typ": "Bearer",
+    "azp": "turismo-api",
+    "sid": "709ed675-08ed-4326-bce6-41a6247c594b",
+    "acr": "1",
+    "realm_access": {
+      "roles": [
+        "supervisor-agencia",
+        "cliente",
+        "agente",
+        "default-roles-turismo",
+        "offline_access",
+        "admin",
+        "uma_authorization",
+        "operador"
+      ]
+    },
+    "resource_access": {
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      },
+      "turismo-api": {
+        "roles": [
+          "reservas.confirmar",
+          "reportes.ver",
+          "pagos.procesar",
+          "tours.gestionar"
+        ]
+      }
+    },
+    "authorization": {
+      "permissions": [
+        {
+          "scopes": [
+            "export"
+          ],
+          "rsid": "81223f82-3d24-4ba2-ab8f-c01adea78d31",
+          "rsname": "Reporte Ventas"
+        }
+      ]
+    },
+    "scope": "profile email",
+    "email_verified": true,
+    "name": "Admin TurismoPeru",
+    "preferred_username": "admin.turismo",
+    "given_name": "Admin",
+    "family_name": "TurismoPeru",
+    "email": "admin.turismo@turismo.pe"
+  }
+}

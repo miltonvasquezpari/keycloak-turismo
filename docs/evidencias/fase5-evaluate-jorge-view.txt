@@ -1,0 +1,148 @@
+# Evaluate: user=jorge.supervisor scope=view
+# status = PERMIT
+# resource = Reporte Ventas with scopes [view]
+# decision = PERMIT
+#   policy Ver Reporte Ventas -> PERMIT
+
+{
+  "results": [
+    {
+      "resource": {
+        "name": "Reporte Ventas with scopes [view]",
+        "_id": "81223f82-3d24-4ba2-ab8f-c01adea78d31"
+      },
+      "scopes": [
+        {
+          "id": "b4cbc75d-783b-4ef5-b6a9-ebb9ea5d4d49",
+          "name": "view"
+        }
+      ],
+      "policies": [
+        {
+          "policy": {
+            "id": "17d1d035-e232-434a-819c-5356f3e4cf50",
+            "name": "Ver Reporte Ventas",
+            "type": "scope",
+            "resources": [],
+            "scopes": [
+              "view"
+            ],
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {}
+          },
+          "status": "PERMIT",
+          "associatedPolicies": [
+            {
+              "policy": {
+                "id": "449f6794-f91c-48cd-ab3b-40d990a50e00",
+                "name": "Rol Supervisor",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "PERMIT",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "346985e6-1564-4a30-b84d-af83b5c3f9f9",
+                "name": "Rol Reportes",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "PERMIT",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "44ac01ad-9bb1-428f-ac73-926aaf05bf70",
+                "name": "Rol Admin",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            }
+          ],
+          "scopes": []
+        }
+      ],
+      "status": "PERMIT",
+      "allowedScopes": [
+        {
+          "id": "b4cbc75d-783b-4ef5-b6a9-ebb9ea5d4d49",
+          "name": "view"
+        }
+      ]
+    }
+  ],
+  "entitlements": false,
+  "status": "PERMIT",
+  "rpt": {
+    "exp": 1791687312,
+    "iat": 1791687012,
+    "jti": "48acffbb-c2f5-4a61-be7f-2866bfa7ff82",
+    "aud": "turismo-api",
+    "sub": "e1bc7b5c-c6df-4019-b375-dd425f1c8c1c",
+    "typ": "Bearer",
+    "azp": "turismo-api",
+    "sid": "fe4fbc21-79c1-4dd7-a1de-12e089c2965c",
+    "acr": "1",
+    "realm_access": {
+      "roles": [
+        "supervisor-agencia",
+        "default-roles-turismo",
+        "agente",
+        "offline_access",
+        "uma_authorization"
+      ]
+    },
+    "resource_access": {
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      },
+      "turismo-api": {
+        "roles": [
+          "reportes.ver"
+        ]
+      }
+    },
+    "authorization": {
+      "permissions": [
+        {
+          "scopes": [
+            "view"
+          ],
+          "rsid": "81223f82-3d24-4ba2-ab8f-c01adea78d31",
+          "rsname": "Reporte Ventas"
+        }
+      ]
+    },
+    "scope": "profile email",
+    "email_verified": true,
+    "name": "Jorge Vargas",
+    "preferred_username": "jorge.supervisor",
+    "given_name": "Jorge",
+    "family_name": "Vargas",
+    "email": "jorge.supervisor@turismo.pe"
+  }
+}

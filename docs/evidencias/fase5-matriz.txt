@@ -1,0 +1,10 @@
+ana.cliente / view               /api/reportes/ventas           403
+ana.cliente / export             /api/reportes/ventas/export    403
+fiona.finanzas / view            /api/reportes/ventas           200
+fiona.finanzas / export          /api/reportes/ventas/export    403
+jorge.supervisor / view          /api/reportes/ventas           200
+jorge.supervisor / export        /api/reportes/ventas/export    403
+admin.turismo / view             /api/reportes/ventas           200
+admin.turismo / export           /api/reportes/ventas/export    200
+---- partners cross-realm (debe 401) ----
+partners -> /ventas              /api/reportes/ventas           401

@@ -1,0 +1,131 @@
+# Evaluate: user=ana.cliente scope=view
+# status = DENY
+# resource = Reporte Ventas with scopes [view]
+# decision = DENY
+#   policy Ver Reporte Ventas -> DENY
+
+{
+  "results": [
+    {
+      "resource": {
+        "name": "Reporte Ventas with scopes [view]",
+        "_id": "81223f82-3d24-4ba2-ab8f-c01adea78d31"
+      },
+      "scopes": [
+        {
+          "id": "b4cbc75d-783b-4ef5-b6a9-ebb9ea5d4d49",
+          "name": "view"
+        }
+      ],
+      "policies": [
+        {
+          "policy": {
+            "id": "17d1d035-e232-434a-819c-5356f3e4cf50",
+            "name": "Ver Reporte Ventas",
+            "type": "scope",
+            "resources": [],
+            "scopes": [
+              "view"
+            ],
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {}
+          },
+          "status": "DENY",
+          "associatedPolicies": [
+            {
+              "policy": {
+                "id": "449f6794-f91c-48cd-ab3b-40d990a50e00",
+                "name": "Rol Supervisor",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "346985e6-1564-4a30-b84d-af83b5c3f9f9",
+                "name": "Rol Reportes",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "44ac01ad-9bb1-428f-ac73-926aaf05bf70",
+                "name": "Rol Admin",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            }
+          ],
+          "scopes": [
+            "view"
+          ]
+        }
+      ],
+      "status": "DENY",
+      "allowedScopes": []
+    }
+  ],
+  "entitlements": false,
+  "status": "DENY",
+  "rpt": {
+    "exp": 1791687312,
+    "iat": 1791687012,
+    "jti": "4a22f4f7-654c-43e3-b0e8-9507ad0e30eb",
+    "aud": "turismo-api",
+    "sub": "075a2dc3-2700-403e-9b17-cf24cbdbdd36",
+    "typ": "Bearer",
+    "azp": "turismo-api",
+    "sid": "5314b151-d4f0-46c3-a5cc-69c64da0eeef",
+    "acr": "1",
+    "realm_access": {
+      "roles": [
+        "default-roles-turismo",
+        "cliente",
+        "offline_access",
+        "uma_authorization"
+      ]
+    },
+    "resource_access": {
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      }
+    },
+    "authorization": {
+      "permissions": []
+    },
+    "scope": "profile email",
+    "email_verified": true,
+    "name": "Ana Quispe",
+    "preferred_username": "ana.cliente",
+    "given_name": "Ana",
+    "family_name": "Quispe",
+    "email": "ana.cliente@turismo.pe"
+  }
+}

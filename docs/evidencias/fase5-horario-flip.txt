@@ -1,0 +1,14 @@
+# Prueba de la policy "Horario Laboral" (Fase 5)
+# TZ servidor Keycloak: America/Lima. Hora corrida: 21:47 (fuera 08:00-20:00).
+# jorge.supervisor export(fuera horario)=403 (OBSERVADO)
+# Se amplia temporalmente la policy a 00:00-23:59, jorge exporta=200.
+# Se restaura policy original (08:00-20:00) y jorge export=403.
+
+$ curl ... /api/reportes/ventas/export (jorge, fuera 08-20)
+403
+
+# Policy ampliada 00:00-23:59
+export(en horario)=200
+
+# Policy restaurada 08:00-20:00
+export(restaurado)=403

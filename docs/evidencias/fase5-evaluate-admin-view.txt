@@ -1,0 +1,154 @@
+# Evaluate: user=admin.turismo scope=view
+# status = PERMIT
+# resource = Reporte Ventas with scopes [view]
+# decision = PERMIT
+#   policy Ver Reporte Ventas -> PERMIT
+
+{
+  "results": [
+    {
+      "resource": {
+        "name": "Reporte Ventas with scopes [view]",
+        "_id": "81223f82-3d24-4ba2-ab8f-c01adea78d31"
+      },
+      "scopes": [
+        {
+          "id": "b4cbc75d-783b-4ef5-b6a9-ebb9ea5d4d49",
+          "name": "view"
+        }
+      ],
+      "policies": [
+        {
+          "policy": {
+            "id": "17d1d035-e232-434a-819c-5356f3e4cf50",
+            "name": "Ver Reporte Ventas",
+            "type": "scope",
+            "resources": [],
+            "scopes": [
+              "view"
+            ],
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {}
+          },
+          "status": "PERMIT",
+          "associatedPolicies": [
+            {
+              "policy": {
+                "id": "449f6794-f91c-48cd-ab3b-40d990a50e00",
+                "name": "Rol Supervisor",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "PERMIT",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "346985e6-1564-4a30-b84d-af83b5c3f9f9",
+                "name": "Rol Reportes",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "PERMIT",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "44ac01ad-9bb1-428f-ac73-926aaf05bf70",
+                "name": "Rol Admin",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "PERMIT",
+              "associatedPolicies": [],
+              "scopes": []
+            }
+          ],
+          "scopes": []
+        }
+      ],
+      "status": "PERMIT",
+      "allowedScopes": [
+        {
+          "id": "b4cbc75d-783b-4ef5-b6a9-ebb9ea5d4d49",
+          "name": "view"
+        }
+      ]
+    }
+  ],
+  "entitlements": false,
+  "status": "PERMIT",
+  "rpt": {
+    "exp": 1791687312,
+    "iat": 1791687012,
+    "jti": "301d4a9e-22c2-4a28-9d00-b1432b538887",
+    "aud": "turismo-api",
+    "sub": "96b041a1-763d-4ee5-b6e3-593ca6636292",
+    "typ": "Bearer",
+    "azp": "turismo-api",
+    "sid": "9f4a57a5-d006-480c-b702-e658541509ec",
+    "acr": "1",
+    "realm_access": {
+      "roles": [
+        "supervisor-agencia",
+        "cliente",
+        "agente",
+        "default-roles-turismo",
+        "offline_access",
+        "admin",
+        "uma_authorization",
+        "operador"
+      ]
+    },
+    "resource_access": {
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      },
+      "turismo-api": {
+        "roles": [
+          "reservas.confirmar",
+          "reportes.ver",
+          "pagos.procesar",
+          "tours.gestionar"
+        ]
+      }
+    },
+    "authorization": {
+      "permissions": [
+        {
+          "scopes": [
+            "view"
+          ],
+          "rsid": "81223f82-3d24-4ba2-ab8f-c01adea78d31",
+          "rsname": "Reporte Ventas"
+        }
+      ]
+    },
+    "scope": "profile email",
+    "email_verified": true,
+    "name": "Admin TurismoPeru",
+    "preferred_username": "admin.turismo",
+    "given_name": "Admin",
+    "family_name": "TurismoPeru",
+    "email": "admin.turismo@turismo.pe"
+  }
+}

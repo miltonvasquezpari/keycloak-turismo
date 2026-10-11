@@ -1,0 +1,121 @@
+# Evaluate: user=fiona.finanzas scope=export
+# status = DENY
+# resource = Reporte Ventas with scopes [export]
+# decision = DENY
+#   policy Exportar Reporte Ventas -> DENY
+
+{
+  "results": [
+    {
+      "resource": {
+        "name": "Reporte Ventas with scopes [export]",
+        "_id": "81223f82-3d24-4ba2-ab8f-c01adea78d31"
+      },
+      "scopes": [
+        {
+          "id": "0f37333b-c946-4526-8bec-0e4daf5abebe",
+          "name": "export"
+        }
+      ],
+      "policies": [
+        {
+          "policy": {
+            "id": "23132bd1-f3a4-4b1a-bd35-5f4fd3b2bd0e",
+            "name": "Exportar Reporte Ventas",
+            "type": "scope",
+            "resources": [],
+            "scopes": [
+              "export"
+            ],
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {}
+          },
+          "status": "DENY",
+          "associatedPolicies": [
+            {
+              "policy": {
+                "id": "44ac01ad-9bb1-428f-ac73-926aaf05bf70",
+                "name": "Rol Admin",
+                "type": "role",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            },
+            {
+              "policy": {
+                "id": "274e1f94-a87c-437f-802f-0754af13f9d0",
+                "name": "Supervisor Lima en Horario",
+                "type": "aggregate",
+                "resources": [],
+                "scopes": [],
+                "logic": "POSITIVE",
+                "decisionStrategy": "UNANIMOUS",
+                "config": {}
+              },
+              "status": "DENY",
+              "associatedPolicies": [],
+              "scopes": []
+            }
+          ],
+          "scopes": [
+            "export"
+          ]
+        }
+      ],
+      "status": "DENY",
+      "allowedScopes": []
+    }
+  ],
+  "entitlements": false,
+  "status": "DENY",
+  "rpt": {
+    "exp": 1791687312,
+    "iat": 1791687012,
+    "jti": "8c1d7f6c-4098-40c2-83c6-a1a288d2a095",
+    "aud": "turismo-api",
+    "sub": "285811c2-466a-4e44-9d5d-98b7437fc503",
+    "typ": "Bearer",
+    "azp": "turismo-api",
+    "sid": "b216a680-fed5-4a51-a867-e3f273b5a626",
+    "acr": "1",
+    "realm_access": {
+      "roles": [
+        "default-roles-turismo",
+        "offline_access",
+        "uma_authorization"
+      ]
+    },
+    "resource_access": {
+      "account": {
+        "roles": [
+          "manage-account",
+          "manage-account-links",
+          "view-profile"
+        ]
+      },
+      "turismo-api": {
+        "roles": [
+          "reportes.ver",
+          "pagos.procesar"
+        ]
+      }
+    },
+    "authorization": {
+      "permissions": []
+    },
+    "scope": "profile email",
+    "email_verified": true,
+    "name": "Fiona Castillo",
+    "preferred_username": "fiona.finanzas",
+    "given_name": "Fiona",
+    "family_name": "Castillo",
+    "email": "fiona.finanzas@turismo.pe"
+  }
+}
