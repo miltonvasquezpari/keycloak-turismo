@@ -1,0 +1,26 @@
+<header class="barra">
+  <a routerLink="/" class="logo">TurismoPerú</a>
+  <nav>
+    <a routerLink="/" routerLinkActive="activa" [routerLinkActiveOptions]="{exact:true}">Catálogo</a>
+    <a *tieneRol="'cliente'" routerLink="/mis-reservas" routerLinkActive="activa">Mis reservas</a>
+    <a *tieneRol="'agente'" routerLink="/agencia" routerLinkActive="activa">
+      Agencia<span *ngIf="agenciaId() as a"> ({{a}})</span>
+    </a>
+    <a *tieneRol="'tours.gestionar'" routerLink="/operaciones/tours" routerLinkActive="activa">Operaciones</a>
+    <a *tieneRol="'pagos.procesar'" routerLink="/finanzas/pagos" routerLinkActive="activa">Finanzas</a>
+    <a *tieneRol="['supervisor-agencia','admin','reportes.ver']" routerLink="/reportes" routerLinkActive="activa">Reportes</a>
+  </nav>
+  <div class="usuario">
+    <ng-container *ngIf="logueado(); else noLog">
+      <span>{{usuario()}}</span>
+      <button type="button" (click)="logout()">Salir</button>
+    </ng-container>
+    <ng-template #noLog>
+      <button type="button" (click)="login()">Ingresar</button>
+    </ng-template>
+  </div>
+</header>
+
+<main class="contenido">
+  <router-outlet />
+</main>
