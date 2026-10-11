@@ -16,14 +16,12 @@ import { ApiService, Reserva } from '../core/api.service';
         <button *ngIf="r.estado === 'PENDIENTE'" (click)="cancelar(r.id)">Cancelar</button>
       </li>
     </ul>
-    <pre *ngIf="detalle()">{{ detalle() | json }}</pre>
     <p *ngIf="error()" class="err">{{error()}}</p>
   `,
 })
 export class MisReservasComponent {
   private api = inject(ApiService);
   reservas = signal<Reserva[]>([]);
-  detalle = signal<Reserva | null>(null);
   error = signal<string | null>(null);
   constructor() { this.cargar(); }
 
@@ -34,7 +32,10 @@ export class MisReservasComponent {
     });
   }
   ver(id: string) {
-    this.api.detalleReserva(id).subscribe({ next: (d) => this.detalle.set(d) });
+    this.api.detalleReserva(id).subscribe({
+      next: (d) => alert(`Reserva ${d.id}\nTour: ${d.tourNombre}\nFecha: ${d.fechaTour}\nEstado: ${d.estado}\nPersonas: ${d.personas}\nTotal: S/ ${d.montoTotal}`),
+      error: () => this.error.set('No se pudo cargar el detalle'),
+    });
   }
   cancelar(id: string) {
     this.api.cancelarReserva(id).subscribe({ next: () => this.cargar() });
