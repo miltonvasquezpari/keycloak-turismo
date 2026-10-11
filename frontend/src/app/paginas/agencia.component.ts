@@ -12,7 +12,7 @@ import { ApiService, Reserva } from '../core/api.service';
     <p>Agencia: <strong>{{agenciaId() || '—'}}</strong></p>
     <ul class="lista">
       <li *ngFor="let r of reservas()">
-        #{{r.id}} {{r.tourCodigo}} · <em>{{r.estado}}</em>
+        #{{r.id}} {{r.tourNombre}} · {{r.fechaTour}} · <em>{{r.estado}}</em>
         <button *ngIf="r.estado === 'PENDIENTE'" (click)="confirmar(r.id)">Confirmar</button>
       </li>
     </ul>
@@ -34,7 +34,7 @@ export class AgenciaComponent {
       error: () => this.error.set('No se pudo cargar'),
     });
   }
-  confirmar(id: number) {
+  confirmar(id: string) {
     this.api.confirmarReserva(id).subscribe({ next: () => this.cargar() });
   }
   private leerAgencia(): string | null {

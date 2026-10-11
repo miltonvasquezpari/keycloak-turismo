@@ -10,7 +10,8 @@ import { ApiService, Reserva } from '../core/api.service';
     <h2>Mis reservas</h2>
     <ul class="lista">
       <li *ngFor="let r of reservas()">
-        <strong>#{{r.id}}</strong> {{r.tourCodigo}} · <em>{{r.estado}}</em> · {{r.personas}} pers.
+        <strong>#{{r.id}}</strong> {{r.tourNombre}} · {{r.fechaTour}} · <em>{{r.estado}}</em>
+        · {{r.personas}} pers. · S/ {{r.montoTotal}}
         <button (click)="ver(r.id)">Ver</button>
         <button *ngIf="r.estado === 'PENDIENTE'" (click)="cancelar(r.id)">Cancelar</button>
       </li>
@@ -32,10 +33,10 @@ export class MisReservasComponent {
       error: () => this.error.set('No se pudo cargar'),
     });
   }
-  ver(id: number) {
+  ver(id: string) {
     this.api.detalleReserva(id).subscribe({ next: (d) => this.detalle.set(d) });
   }
-  cancelar(id: number) {
+  cancelar(id: string) {
     this.api.cancelarReserva(id).subscribe({ next: () => this.cargar() });
   }
 }

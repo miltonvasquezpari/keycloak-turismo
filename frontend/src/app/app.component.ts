@@ -14,9 +14,9 @@ import { TieneRolDirective } from './core/tiene-rol.directive';
 export class AppComponent {
   private kc = inject(KeycloakService);
   logueado = signal(this.kc.isLoggedIn());
-  usuario = signal(this.kc.isLoggedIn() ? this.kc.getUsername() : '');
+  usuario = signal(this.leerClaim('preferred_username') ?? '');
   roles = signal(this.kc.isLoggedIn() ? this.kc.getUserRoles(true) : []);
-  agenciaId = computed(() => this.extraerClaim('agencia_id'));
+  agenciaId = computed(() => this.leerClaim('agencia_id'));
 
   async login() {
     await this.kc.login();
@@ -25,7 +25,7 @@ export class AppComponent {
     await this.kc.logout(window.location.origin);
   }
 
-  private extraerClaim(claim: string): string | null {
+  private leerClaim(claim: string): string | null {
     if (!this.kc.isLoggedIn()) return null;
     const parsed = (this.kc.getKeycloakInstance().tokenParsed ?? {}) as Record<string, unknown>;
     const v = parsed[claim];

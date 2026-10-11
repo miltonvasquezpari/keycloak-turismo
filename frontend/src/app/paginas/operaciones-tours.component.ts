@@ -42,6 +42,6 @@ export class OperacionesToursComponent {
   editar(t: TourDetalle) {
     const v = prompt('Nuevo precio', String(t.precio ?? ''));
     if (v == null) return;
-    this.api.actualizarTour(t.codigo, { ...t, precio: Number(v) }).subscribe({ next: () => this.cargar() });
+    this.api.actualizarTour(t.id, { ...t, precio: Number(v) }).subscribe({ next: () => this.cargar() });
   }
 }
