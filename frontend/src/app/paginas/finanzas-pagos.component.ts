@@ -15,8 +15,14 @@ import { ApiService } from '../core/api.service';
       <button (click)="reLogin()">Re-login con <code>pagos:write</code></button>
     </p>
     <form (ngSubmit)="pagar()" [class.disabled]="!tieneScope()">
-      <label>Reserva ID <input name="reservaId" type="number" [(ngModel)]="form.reservaId" required></label>
-      <label>Monto <input name="monto" type="number" step="0.01" [(ngModel)]="form.monto" required></label>
+      <label>Reserva ID <input name="reservaId" placeholder="R-1003" [(ngModel)]="form.reservaId" required></label>
+      <label>Método
+        <select name="metodo" [(ngModel)]="form.metodo" required>
+          <option value="TARJETA">TARJETA</option>
+          <option value="YAPE">YAPE</option>
+          <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+        </select>
+      </label>
       <button type="submit" [disabled]="!tieneScope()">Pagar</button>
     </form>
     <p *ngIf="ok()">Pago registrado #{{ok()}}</p>
@@ -27,7 +33,7 @@ import { ApiService } from '../core/api.service';
 export class FinanzasPagosComponent {
   private api = inject(ApiService);
   private kc = inject(KeycloakService);
-  form: { reservaId?: number; monto?: number } = {};
+  form: { reservaId?: string; metodo?: string } = { metodo: 'TARJETA' };
   ok = signal<number | null>(null);
   error = signal<string | null>(null);
 
