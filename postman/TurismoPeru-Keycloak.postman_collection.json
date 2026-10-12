@@ -1,0 +1,443 @@
+{
+  "info": {
+    "name": "TurismoPeru-Keycloak",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Pruebas automatizadas de los 14 endpoints E1..E14 contra Keycloak y el backend. Ver postman/README.md."
+  },
+  "item": [
+    {
+      "name": "00 Discovery",
+      "item": [
+        {
+          "name": "well-known realm turismo",
+          "event": [{"listen":"test","script":{"exec":["pm.test('status 200', ()=> pm.response.to.have.status(200));","pm.test('issuer correcto', ()=> pm.expect(pm.response.json().issuer).to.eql(pm.environment.get('kc_url')+'/realms/'+pm.environment.get('realm_turismo')));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","url":"{{kc_url}}/realms/{{realm_turismo}}/.well-known/openid-configuration"}
+        },
+        {
+          "name": "well-known realm agencias-partners",
+          "event": [{"listen":"test","script":{"exec":["pm.test('status 200', ()=> pm.response.to.have.status(200));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","url":"{{kc_url}}/realms/{{realm_partners}}/.well-known/openid-configuration"}
+        }
+      ]
+    },
+    {
+      "name": "01 Tokens",
+      "item": [
+        {
+          "name": "Password grant - ana.cliente",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const j = pm.response.json();",
+            "pm.environment.set('token_ana', j.access_token);",
+            "pm.environment.set('refresh_ana', j.refresh_token);",
+            "pm.test('tiene scope reservas:write', ()=> pm.expect(j.scope).to.include('reservas:write'));"
+          ],"type":"text/javascript"}}],
+          "request": {
+            "method":"POST",
+            "header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},
+              {"key":"grant_type","value":"password"},
+              {"key":"username","value":"ana.cliente"},
+              {"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid reservas:write"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"
+          }
+        },
+        {
+          "name": "Password grant - carlos.premium",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_carlos', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"carlos.premium"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - lucia.agente",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_lucia', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"lucia.agente"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - mario.agente",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_mario', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"mario.agente"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - jorge.supervisor",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_jorge', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"jorge.supervisor"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - olga.operador",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_olga', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"olga.operador"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - fiona.finanzas (sin scope pagos)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const j = pm.response.json();",
+            "pm.environment.set('token_fiona', j.access_token);",
+            "pm.test('scope NO incluye pagos:write', ()=> pm.expect(j.scope).to.not.include('pagos:write'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"fiona.finanzas"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - fiona.finanzas (con pagos:write)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const j = pm.response.json();",
+            "pm.environment.set('token_fiona_pagos', j.access_token);",
+            "pm.test('scope incluye pagos:write', ()=> pm.expect(j.scope).to.include('pagos:write'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"fiona.finanzas"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid pagos:write"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - admin.turismo",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_admin', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"admin.turismo"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Password grant - pedro.partner (realm partners)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.environment.set('token_pedro', pm.response.json().access_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"partners-portal"},{"key":"grant_type","value":"password"},
+              {"key":"username","value":"pedro.partner"},{"key":"password","value":"{{password}}"},
+              {"key":"scope","value":"openid"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_partners}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Client credentials - partners-integracion",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const j = pm.response.json();",
+            "pm.environment.set('token_partners_cc', j.access_token);",
+            "pm.test('tiene access_token', ()=> pm.expect(j).to.have.property('access_token'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"partners-integracion"},
+              {"key":"client_secret","value":"{{partners_integracion_secret}}"},
+              {"key":"grant_type","value":"client_credentials"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_partners}}/protocol/openid-connect/token"}
+        },
+        {
+          "name": "Refresh token - ana (ok)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const j = pm.response.json();",
+            "pm.environment.set('refresh_ana', j.refresh_token);"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+            "body":{"mode":"urlencoded","urlencoded":[
+              {"key":"client_id","value":"turismo-web"},
+              {"key":"grant_type","value":"refresh_token"},
+              {"key":"refresh_token","value":"{{refresh_ana}}"}
+            ]},
+            "url":"{{kc_url}}/realms/{{realm_turismo}}/protocol/openid-connect/token"}
+        }
+      ]
+    },
+    {
+      "name": "02 Publicos",
+      "item": [
+        {
+          "name": "E1 GET /api/public/tours",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.test('array', ()=> pm.expect(pm.response.json()).to.be.an('array'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","url":"{{api_url}}/api/public/tours"}
+        },
+        {
+          "name": "E2 GET /api/public/tours/1",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.test('tiene id=1', ()=> pm.expect(pm.response.json().id).to.eql(1));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","url":"{{api_url}}/api/public/tours/{{tour_id_demo}}"}
+        }
+      ]
+    },
+    {
+      "name": "03 Privados",
+      "item": [
+        {
+          "name": "E3 GET /api/reservas/mias (ana)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.test('array', ()=> pm.expect(pm.response.json()).to.be.an('array'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_ana}}"}],
+            "url":"{{api_url}}/api/reservas/mias"}
+        },
+        {
+          "name": "E4 POST /api/reservas (ana crea una)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200 o 201', ()=> pm.expect([200,201]).to.include(pm.response.code));",
+            "const j = pm.response.json();",
+            "pm.environment.set('reserva_ana_creada', j.id);",
+            "pm.test('tiene id', ()=> pm.expect(j.id).to.be.a('string'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[
+              {"key":"Authorization","value":"Bearer {{token_ana}}"},
+              {"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\"tourId\":{{tour_id_demo}},\"fechaTour\":\"{{fecha_tour_demo}}\",\"personas\":1,\"agenciaId\":\"LIM01\"}"},
+            "url":"{{api_url}}/api/reservas"}
+        },
+        {
+          "name": "E7 GET /api/agencia/reservas (lucia LIM01)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const arr = pm.response.json();",
+            "pm.test('todas son LIM01', ()=> arr.forEach(r => pm.expect(r.agenciaId).to.eql('LIM01')));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_lucia}}"}],
+            "url":"{{api_url}}/api/agencia/reservas"}
+        },
+        {
+          "name": "E7 GET /api/agencia/reservas (mario CUS01)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "const arr = pm.response.json();",
+            "pm.test('todas son CUS01', ()=> arr.forEach(r => pm.expect(r.agenciaId).to.eql('CUS01')));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_mario}}"}],
+            "url":"{{api_url}}/api/agencia/reservas"}
+        },
+        {
+          "name": "E9 POST /api/admin/tours (olga crea)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200 o 201', ()=> pm.expect([200,201]).to.include(pm.response.code));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[
+              {"key":"Authorization","value":"Bearer {{token_olga}}"},
+              {"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\"codigo\":\"T-PM-{{$timestamp}}\",\"nombre\":\"Postman Tour\",\"precio\":100,\"duracionHoras\":2,\"cupoDiario\":10,\"destinoId\":2,\"activo\":true}"},
+            "url":"{{api_url}}/api/admin/tours"}
+        },
+        {
+          "name": "E10 PUT /api/admin/tours/1 (olga edita)",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"PUT","header":[
+              {"key":"Authorization","value":"Bearer {{token_olga}}"},
+              {"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\"codigo\":\"T-MP-01\",\"nombre\":\"Machu Picchu Clasico\",\"precio\":480,\"duracionHoras\":12,\"cupoDiario\":40,\"destinoId\":1,\"activo\":true}"},
+            "url":"{{api_url}}/api/admin/tours/1"}
+        },
+        {
+          "name": "E3 sin token -> 401",
+          "event": [{"listen":"test","script":{"exec":["pm.test('401', ()=> pm.response.to.have.status(401));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","url":"{{api_url}}/api/reservas/mias"}
+        },
+        {
+          "name": "E3 ana sin rol agente -> E7 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_ana}}"}],
+            "url":"{{api_url}}/api/agencia/reservas"}
+        }
+      ]
+    },
+    {
+      "name": "04 Especiales",
+      "item": [
+        {
+          "name": "E5 ana ve su propia reserva recien creada",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.test('es la reserva de ana', ()=> pm.expect(pm.response.json().id).to.eql(pm.environment.get('reserva_ana_creada')));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_ana}}"}],
+            "url":"{{api_url}}/api/reservas/{{reserva_ana_creada}}"}
+        },
+        {
+          "name": "E5 carlos NO ve la reserva de ana -> 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_carlos}}"}],
+            "url":"{{api_url}}/api/reservas/{{reserva_ana_creada}}"}
+        },
+        {
+          "name": "E8 lucia confirma reserva LIM01 (R-1001)",
+          "event": [{"listen":"test","script":{"exec":["pm.test('200 o 409 si ya CONFIRMADA', ()=> pm.expect([200,409]).to.include(pm.response.code));"],"type":"text/javascript"}}],
+          "request": {"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token_lucia}}"}],
+            "url":"{{api_url}}/api/reservas/R-1001/confirmar"}
+        },
+        {
+          "name": "E8 mario intenta confirmar reserva LIM01 -> 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token_mario}}"}],
+            "url":"{{api_url}}/api/reservas/R-1001/confirmar"}
+        },
+        {
+          "name": "E11 fiona SIN pagos:write intenta pagar -> 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[
+              {"key":"Authorization","value":"Bearer {{token_fiona}}"},
+              {"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\"reservaId\":\"R-1003\",\"metodo\":\"TARJETA\"}"},
+            "url":"{{api_url}}/api/pagos"}
+        },
+        {
+          "name": "E11 fiona CON pagos:write paga R-1003 (ok)",
+          "event": [{"listen":"test","script":{"exec":["pm.test('200/201 o 409 si ya PAGADA', ()=> pm.expect([200,201,409]).to.include(pm.response.code));"],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[
+              {"key":"Authorization","value":"Bearer {{token_fiona_pagos}}"},
+              {"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\"reservaId\":\"R-1003\",\"metodo\":\"TARJETA\"}"},
+            "url":"{{api_url}}/api/pagos"}
+        },
+        {
+          "name": "E11 fiona paga reserva PENDIENTE (R-1002) -> 409",
+          "event": [{"listen":"test","script":{"exec":["pm.test('409', ()=> pm.response.to.have.status(409));"],"type":"text/javascript"}}],
+          "request": {"method":"POST","header":[
+              {"key":"Authorization","value":"Bearer {{token_fiona_pagos}}"},
+              {"key":"Content-Type","value":"application/json"}],
+            "body":{"mode":"raw","raw":"{\"reservaId\":\"R-1002\",\"metodo\":\"TARJETA\"}"},
+            "url":"{{api_url}}/api/pagos"}
+        },
+        {
+          "name": "E6 carlos intenta cancelar reserva de ana -> 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token_carlos}}"}],
+            "url":"{{api_url}}/api/reservas/{{reserva_ana_creada}}/cancelar"}
+        },
+        {
+          "name": "E6 ana cancela su propia reserva (ok)",
+          "event": [{"listen":"test","script":{"exec":["pm.test('200 o 204', ()=> pm.expect([200,204]).to.include(pm.response.code));"],"type":"text/javascript"}}],
+          "request": {"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{token_ana}}"}],
+            "url":"{{api_url}}/api/reservas/{{reserva_ana_creada}}/cancelar"}
+        }
+      ]
+    },
+    {
+      "name": "05 Granular",
+      "item": [
+        {
+          "name": "E12 admin ve reporte de ventas",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.test('array', ()=> pm.expect(pm.response.json()).to.be.an('array'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_admin}}"}],
+            "url":"{{api_url}}/api/reportes/ventas"}
+        },
+        {
+          "name": "E13 admin exporta CSV",
+          "event": [{"listen":"test","script":{"exec":[
+            "pm.test('200', ()=> pm.response.to.have.status(200));",
+            "pm.test('content-type csv', ()=> pm.expect(pm.response.headers.get('Content-Type')).to.include('text/csv'));"
+          ],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_admin}}"}],
+            "url":"{{api_url}}/api/reportes/ventas/export"}
+        },
+        {
+          "name": "E13 lucia intenta exportar -> 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_lucia}}"}],
+            "url":"{{api_url}}/api/reportes/ventas/export"}
+        },
+        {
+          "name": "E12 fiona ve reporte (acceso UMA view)",
+          "event": [{"listen":"test","script":{"exec":["pm.test('200', ()=> pm.response.to.have.status(200));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_fiona}}"}],
+            "url":"{{api_url}}/api/reportes/ventas"}
+        }
+      ]
+    },
+    {
+      "name": "06 Multi-realm",
+      "item": [
+        {
+          "name": "E14 partners_cc consulta disponibilidad -> 200",
+          "event": [{"listen":"test","script":{"exec":["pm.test('200', ()=> pm.response.to.have.status(200));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_partners_cc}}"}],
+            "url":"{{api_url}}/api/partners/disponibilidad?tourId=1&fecha=2026-12-01"}
+        },
+        {
+          "name": "E14 pedro.partner (usuario) consulta disponibilidad -> 200",
+          "event": [{"listen":"test","script":{"exec":["pm.test('200', ()=> pm.response.to.have.status(200));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_pedro}}"}],
+            "url":"{{api_url}}/api/partners/disponibilidad?tourId=1&fecha=2026-12-01"}
+        },
+        {
+          "name": "E14 ana (realm turismo) intenta -> 403",
+          "event": [{"listen":"test","script":{"exec":["pm.test('403', ()=> pm.response.to.have.status(403));"],"type":"text/javascript"}}],
+          "request": {"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token_ana}}"}],
+            "url":"{{api_url}}/api/partners/disponibilidad?tourId=1&fecha=2026-12-01"}
+        }
+      ]
+    }
+  ]
+}
