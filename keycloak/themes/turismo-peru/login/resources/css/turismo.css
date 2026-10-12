@@ -1,0 +1,213 @@
+/* TurismoPerú — tema de login
+   Paleta:
+     --terracota  #C0502A  (botón primario, acentos)
+     --andino     #2F6B4F  (titular, enlaces)
+     --arena      #F4EDE1  (fondo claro de la tarjeta)
+     --tinta      #1b1f23  (texto)
+   Fondo: gradiente andino (ocre -> terracota -> verde)
+          + patrón geométrico tipo "chakana" en SVG embebido como data URI,
+          con muy baja opacidad para no competir con el formulario. */
+
+:root {
+  --terracota: #C0502A;
+  --terracota-dark: #9d3f1f;
+  --andino: #2F6B4F;
+  --andino-dark: #214d39;
+  --arena: #F4EDE1;
+  --tinta: #1b1f23;
+}
+
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  color: var(--tinta);
+  background:
+    /* chakana pattern (chevron andino) */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><g fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='1'><path d='M0 40 L40 0 L80 40 L40 80 Z'/><rect x='30' y='30' width='20' height='20'/></g></svg>"),
+    linear-gradient(135deg, #d9873f 0%, var(--terracota) 45%, var(--andino) 100%);
+  background-size: 80px 80px, cover;
+  background-attachment: fixed;
+}
+
+/* --- Tarjeta central --- */
+
+.login-pf-page,
+#kc-container,
+#kc-container-wrapper {
+  background: transparent !important;
+}
+
+.card-pf {
+  background: var(--arena) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25) !important;
+  padding: 2rem 2.25rem !important;
+  max-width: 440px;
+  margin: 2rem auto !important;
+}
+
+/* --- Encabezado y logo --- */
+
+#kc-header,
+#kc-header-wrapper {
+  text-align: center;
+  background: transparent !important;
+  padding: 1.5rem 0 0 0 !important;
+  color: #fff !important;
+}
+
+#kc-header-wrapper {
+  background-image: url("../img/logo.svg") !important;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 72px 72px;
+  padding-top: 88px !important;
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+#kc-header-wrapper::after {
+  content: "TurismoPerú";
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+  margin-top: 0.25rem;
+}
+
+/* --- Títulos --- */
+
+#kc-page-title {
+  color: var(--andino);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Inputs --- */
+
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  border: 1px solid #d7cbb7 !important;
+  border-radius: 6px !important;
+  padding: 0.6rem 0.75rem !important;
+  background: #fff !important;
+  color: var(--tinta) !important;
+  box-shadow: none !important;
+  transition: border-color 0.15s ease;
+}
+
+.form-control:focus {
+  border-color: var(--andino) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(47,107,79,0.18) !important;
+}
+
+label {
+  color: var(--tinta);
+  font-weight: 500;
+}
+
+/* --- Botón primario (Ingresar) --- */
+
+.btn-primary,
+input[type="submit"].btn-primary,
+#kc-login {
+  background: var(--terracota) !important;
+  border-color: var(--terracota) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+  border-radius: 6px !important;
+  padding: 0.65rem 1rem !important;
+  transition: background 0.15s ease;
+  box-shadow: none !important;
+}
+
+.btn-primary:hover,
+#kc-login:hover {
+  background: var(--terracota-dark) !important;
+  border-color: var(--terracota-dark) !important;
+}
+
+/* --- Enlaces --- */
+
+a, a:visited {
+  color: var(--andino);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--andino-dark);
+  text-decoration: underline;
+}
+
+/* --- Social providers (botón GitHub) --- */
+
+#kc-social-providers h4 {
+  color: #666;
+  font-weight: 500;
+  margin-top: 1.25rem;
+}
+
+#kc-social-providers ul {
+  padding: 0;
+  margin: 0.5rem 0 0;
+  list-style: none;
+}
+
+#kc-social-providers li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #24292f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+#kc-social-providers li a:hover {
+  background: #000;
+  text-decoration: none;
+}
+
+/* --- Mensajes de error / éxito --- */
+
+.alert-error, .alert-danger,
+.kc-feedback-text {
+  background: #fde8e2;
+  color: #7a2410;
+  border: 1px solid #e5b7a7;
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+}
+
+.alert-success {
+  background: #e4f1ea;
+  color: var(--andino-dark);
+  border: 1px solid #b7d6c3;
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+}
+
+/* --- Idioma / footer --- */
+
+#kc-locale {
+  text-align: right;
+}
+
+#kc-locale a, #kc-locale ul a {
+  color: #fff !important;
+}
