@@ -1,0 +1,41 @@
+Fase 9 — Brute force detection sobre test.bruteforce
+
+Configuracion aplicada en realm turismo:
+  bruteForceProtected        = true
+  failureFactor              = 5           (fallos antes de lockout)
+  waitIncrementSeconds       = 60          (segundos de bloqueo tras pasar el umbral)
+  maxFailureWaitSeconds      = 900         (tope maximo de bloqueo = 15 min)
+  minimumQuickLoginWaitSeconds = 60
+  quickLoginCheckMilliSeconds  = 1000
+  maxDeltaTimeSeconds        = 43200       (ventana para contar fallos consecutivos)
+  permanentLockout           = false
+
+Secuencia de prueba (POST al token endpoint, client turismo-web):
+
+  intento 1 (password mala): HTTP 401 invalid_grant
+  intento 2 (password mala): HTTP 401 invalid_grant
+  intento 3 (password mala): HTTP 401 invalid_grant
+  intento 4 (password mala): HTTP 401 invalid_grant
+  intento 5 (password mala): HTTP 401 invalid_grant
+  intento 6 (password mala): HTTP 401 invalid_grant   <- aqui se activa el lockout
+  intento 7 (password CORRECTA, ya bloqueado): HTTP 401 invalid_grant
+
+Estado del usuario tras la racha (attack-detection endpoint):
+
+  {
+    "disabled": true,
+    "numFailures": 5,
+    "numTemporaryLockouts": 0,
+    "lastIPFailure": "172.20.0.1",
+    "lastFailure": 1791773404563
+  }
+
+Se desbloquea manualmente desde la admin console
+(Realm > Users > <usuario> > Account disabled > Unlock)
+o via CLI:
+
+  kcadm.sh delete attack-detection/brute-force/users/<id> -r turismo
+
+Nota: la respuesta "invalid_grant" es la misma que se da con password mala,
+Keycloak NO revela que el usuario esta bloqueado — comportamiento esperado
+para no filtrar informacion al atacante.

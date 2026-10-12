@@ -38,7 +38,7 @@
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": true,
   "editUsernameAllowed": false,
-  "bruteForceProtected": false,
+  "bruteForceProtected": true,
   "permanentLockout": false,
   "maxTemporaryLockouts": 0,
   "bruteForceStrategy": "MULTIPLE",
@@ -47,7 +47,7 @@
   "waitIncrementSeconds": 60,
   "quickLoginCheckMilliSeconds": 1000,
   "maxDeltaTimeSeconds": 43200,
-  "failureFactor": 30,
+  "failureFactor": 5,
   "roles": {
     "realm": [
       {
@@ -753,6 +753,19 @@
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "webAuthnPolicyPasswordlessExtraOrigins": [],
   "users": [
+    {
+      "username": "test.bruteforce",
+      "firstName": "Test",
+      "lastName": "BruteForce",
+      "email": "test.bruteforce@turismo.local",
+      "emailVerified": true,
+      "enabled": true,
+      "credentials": [
+        { "type": "password", "value": "Turismo#2026a", "temporary": false }
+      ],
+      "realmRoles": ["default-roles-turismo"],
+      "groups": ["/Clientes/Estandar"]
+    },
     {
       "id": "96b041a1-763d-4ee5-b6e3-593ca6636292",
       "username": "admin.turismo",
@@ -2318,13 +2331,22 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "smtpServer": {},
-  "eventsEnabled": false,
+  "eventsEnabled": true,
+  "eventsExpiration": 2592000,
   "eventsListeners": [
     "jboss-logging"
   ],
-  "enabledEventTypes": [],
-  "adminEventsEnabled": false,
-  "adminEventsDetailsEnabled": false,
+  "enabledEventTypes": [
+    "LOGIN", "LOGIN_ERROR",
+    "LOGOUT", "LOGOUT_ERROR",
+    "CODE_TO_TOKEN", "CODE_TO_TOKEN_ERROR",
+    "REFRESH_TOKEN", "REFRESH_TOKEN_ERROR",
+    "REGISTER", "REGISTER_ERROR",
+    "IDENTITY_PROVIDER_LOGIN", "IDENTITY_PROVIDER_LOGIN_ERROR",
+    "CLIENT_LOGIN", "CLIENT_LOGIN_ERROR"
+  ],
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": true,
   "identityProviders": [
     {
       "alias": "github",

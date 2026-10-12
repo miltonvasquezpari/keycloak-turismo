@@ -1,0 +1,40 @@
+Fase 9 — Auditoria de eventos (User events + Admin events)
+
+Configuracion aplicada en realm turismo:
+
+  eventsEnabled           = true
+  eventsListeners         = [ "jboss-logging" ]
+  eventsExpiration        = 2592000           (30 dias)
+  enabledEventTypes       = [
+      LOGIN, LOGIN_ERROR,
+      LOGOUT, LOGOUT_ERROR,
+      CODE_TO_TOKEN, CODE_TO_TOKEN_ERROR,
+      REFRESH_TOKEN, REFRESH_TOKEN_ERROR,
+      REGISTER, REGISTER_ERROR,
+      IDENTITY_PROVIDER_LOGIN, IDENTITY_PROVIDER_LOGIN_ERROR,
+      CLIENT_LOGIN, CLIENT_LOGIN_ERROR
+    ]
+  adminEventsEnabled      = true
+  adminEventsDetailsEnabled = true
+
+Verificacion:
+
+  kcadm.sh get events -r turismo --query 'max=5'
+  -> devuelve los 5 ultimos eventos (ver abajo).
+
+Muestra tras la prueba de brute force contra test.bruteforce:
+
+  [1791773404759] LOGIN_ERROR user=16667cfd-da41-... client=turismo-web ip=172.20.0.1
+  [1791773404714] LOGIN_ERROR user=16667cfd-da41-... client=turismo-web ip=172.20.0.1
+  [1791773404679] LOGIN_ERROR user=16667cfd-da41-... client=turismo-web ip=172.20.0.1
+  [1791773404642] LOGIN_ERROR user=16667cfd-da41-... client=turismo-web ip=172.20.0.1
+  [1791773404604] LOGIN_ERROR user=16667cfd-da41-... client=turismo-web ip=172.20.0.1
+
+Los Admin events (cambios de configuracion, creacion de usuarios, etc.)
+se consultan con:
+
+  kcadm.sh get events/admin -r turismo
+
+Donde se registraron, por ejemplo, los updates que hizo este propio
+proceso Fase 9 (habilitar events, bruteForceProtected, crear
+test.bruteforce, etc.).
